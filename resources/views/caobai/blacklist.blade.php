@@ -67,7 +67,7 @@
                       <a onclick="uploadFile()" class="btn btn-secondary text-white">kiểm tra file</a>
                     </div>
                     <div class="col-2 text-md-right">
-                      <a href="{{ url('blackList.xls')}}"  class="btn btn-primary">Tải về file mẫu</a>
+                      <a href="{{ url('blackList.xlsx')}}"  class="btn btn-primary">Tải về file mẫu</a>
                     </div>
                   </div> 
                   <div class="row" id="table">
@@ -156,7 +156,7 @@
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					    },
       type : 'POST',
-      url: "{{ route('render')}}",
+      url: "{{ route('blacklist.render')}}",
       data: formData,
       async: false,
 				cache: false,

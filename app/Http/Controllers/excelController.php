@@ -9,7 +9,7 @@ use App\Imports\importExcel;
 use App\Imports\blacklist;
 use App\Imports\keylist;
 use App\Models\KeyCaoBai;
-
+use App\Models\BlackList as ModelBlackList;
 class excelController extends Controller
 {
     public function excel()
@@ -96,15 +96,31 @@ class excelController extends Controller
         ];
     }
 
+    public function excelUploadBlackList(Request $request)
+    {
+        $key_table = [];
+        $key_table  = session()->get('blacklist');
+        foreach ($key_table as $key => $value) {
+            ModelBlackList::query()->insert(
+                [
+                    'id'    => null,
+                    'domain'  => $value['blacklist'],
+                    'categories' => $value['loai']
+                ]
+            );
+        }
+    }
+
     public function blacklist_render(Request $request)
     {
         $html = '';
         $html2 = '';
+        $route = route('upload.excel.blacklist');
         if ($request->has('file')) {
             Excel::import(new blacklist, $request->file('file'));
-            $key_table  = session()->get('excel');
-            $html = view('excel.render_key', compact('key_render'))->render();
-            $html2 = view('excel.reportExcel')->render();
+            $blacklist  = session()->get('blacklist');
+            $html = view('excel.render_blacklist', compact('blacklist'))->render();
+            $html2 = view('excel.reportExcel',compact('route'))->render();
         }
         return [
             'html' => $html,

@@ -36,6 +36,8 @@ Route::controller(excelController::class)->group(function () {
     Route::post('inspect/excel', 'render')->name('render');
     Route::post('excel/key', 'excelUploadkey')->name('upload.excel.key');
     Route::post('key/render', 'key_render')->name('key.render');
+    Route::post('blacklist/render', 'blacklist_render')->name('blacklist.render');
+    Route::post('excel/blacklist', 'excelUploadBlackList')->name('upload.excel.blacklist');
 });
 Route::view('create/key','levelphp.create')->name('key.create.view');
 Route::controller(TextController::class)->group(function () {

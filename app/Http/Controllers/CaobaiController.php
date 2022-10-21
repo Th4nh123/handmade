@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\KeyCaoBai;
 use App\Models\Paragraph;
 use App\Models\BlackList;
-use App\Exports\exportExcel;
-use Maatwebsite\Excel\Facades\Excel;
 class CaobaiController extends Controller
 {
 
@@ -25,8 +23,7 @@ class CaobaiController extends Controller
 
     public function inputkey()
     {
-        // return view('caobai.create_search');
-        return Excel::download(new exportExcel('key' => ), 'invoices.xlsx');
+        return view('caobai.create_search');
     }
 
     public function storekey(Request $request)

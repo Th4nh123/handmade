@@ -11,46 +11,44 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\KeyTable;
-class exportExcel implements FromView, ShouldAutoSize, WithTitle, WithStyles, WithEvents,WithColumnWidths
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Support\Collection;
+
+class exportExcel implements FromCollection, ShouldAutoSize, WithTitle, WithStyles, WithEvents,WithColumnWidths
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    protected $key;
-
-    public function __construct(array $key)
+    public function collection()
     {
-        $this->key = $key['key_table'];
-    }
-    public function view(): View
-    {
-        return view('excel.reportExcel', [
-            'key_excel' => $this->key
+        return new Collection([
+            [1, 2, 3],
+            [4, 5, 6]
         ]);
     }
     
     public function columnWidths(): array
     {
         return [
-            'A' => 7,
-            'B' => 18,
-            'C' => 18,
-            'D' => 18,
-            'E' => 18,
-            'F' => 18,
-            'G' => 18,
-            'H' => 18,
-            'I' => 18,
-            'J' => 18,
-            'K' => 18,
-            'L' => 18,
+            'A' => 30,
+            'B' => 90,
+            'C' => 90,
+            // 'D' => 18,
+            // 'E' => 18,
+            // 'F' => 18,
+            // 'G' => 18,
+            // 'H' => 18,
+            // 'I' => 18,
+            // 'J' => 18,
+            // 'K' => 18,
+            // 'L' => 18,
         ];
     }  
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->mergeCells('A1:L2');
-        $sheet->mergeCells('A3:L3');
+        $sheet->mergeCells('A1:C2');
+        $sheet->mergeCells('A3:C3');
  
         $sheet->setCellValue('A1', 'Danh sách vừa lưu');
         $styleMain =[ 
@@ -99,21 +97,21 @@ class exportExcel implements FromView, ShouldAutoSize, WithTitle, WithStyles, Wi
             ]
         ];
         //$color = '5ae6ae';
-        $sheet->getStyle('A4:L4')-> applyFromArray($styleArray);
+        $sheet->getStyle('A4:C4')-> applyFromArray($styleArray);
         $sheet->getRowDimension(4)->setRowHeight(40);
 
         $sheet->setCellValue('A4', 'STT');
         $sheet->setCellValue('B4', 'Key1');
         $sheet->setCellValue('C4', 'Key2');
-        $sheet->setCellValue('D4', 'Key3');
-        $sheet->setCellValue('E4', 'Key4');
-        $sheet->setCellValue('F4', 'Key5');
-        $sheet->setCellValue('G4', 'Key6');
-        $sheet->setCellValue('H4', 'Key7');
-        $sheet->setCellValue('I4', 'Key8');
-        $sheet->setCellValue('J4', 'Key9');
-        $sheet->setCellValue('K4', 'Key10');
-        $sheet->setCellValue('L4', 'Key11');
+        // $sheet->setCellValue('D4', 'Key3');
+        // $sheet->setCellValue('E4', 'Key4');
+        // $sheet->setCellValue('F4', 'Key5');
+        // $sheet->setCellValue('G4', 'Key6');
+        // $sheet->setCellValue('H4', 'Key7');
+        // $sheet->setCellValue('I4', 'Key8');
+        // $sheet->setCellValue('J4', 'Key9');
+        // $sheet->setCellValue('K4', 'Key10');
+        // $sheet->setCellValue('L4', 'Key11');
     }
 
     public function registerEvents(): array
